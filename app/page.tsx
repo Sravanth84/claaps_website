@@ -1,65 +1,197 @@
-import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+import { Container } from "@/components/global/Container";
+import { SectionHeading } from "@/components/global/SectionHeading";
+import { Card } from "@/components/global/Card";
+import { Button } from "@/components/global/Button";
+import { CTASection } from "@/components/global/CTASection";
+import { PlaceholderBlock } from "@/components/global/PlaceholderBlock";
+import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
+import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
+import AboutUsSection from "@/components/ui/about-us-section";
+import WhyClaapsSection from "@/components/ui/why-claaps-section";
+import { ClaapsOrbitCanvas } from "@/components/three/ClaapsOrbitCanvas";
+import { services } from "@/lib/content/services";
+import { roles } from "@/lib/content/solutions";
+
+const problemStatements = [
+  "Audit evidence lives in spreadsheets, email threads, and shared drives — not in the system you'd actually defend to a regulator.",
+  "Oracle GRC and Risk Management Cloud are powerful, but only if they're configured around how your organization actually governs risk.",
+  "Regulatory requirements change faster than most internal teams can re-map them to existing controls.",
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <>
+      {/* Wraps hero + About together so the sticky hero's containing block
+          ends right after About. Without this wrapper, the containing
+          block is the whole page, and position:sticky never structurally
+          releases hero — it only ever gets covered by whatever happens to
+          paint on top. Once About's own box finishes and nothing further
+          down the page has a high enough z-index to keep covering it, the
+          still-"stuck" hero bleeds back through later sections. */}
+      <div className="relative">
+        <section className="sticky top-0 isolate z-0 flex min-h-screen items-center">
+          {/* Extends past the section's own top edge (further than the header's
+              h-18) so the gradient fills the screen behind the transparent
+              header too — otherwise the body's white background showed
+              through as a seam. Deliberately over-extended past the header's
+              exact height so sub-pixel rounding at different browser zoom
+              levels can't reopen a hairline gap. */}
+          <div className="absolute inset-x-0 -top-24 bottom-0">
+            <BackgroundGradientAnimation
+              containerClassName="absolute inset-0"
+              gradientBackgroundStart="rgb(17, 19, 23)"
+              gradientBackgroundEnd="rgb(8, 9, 13)"
+              firstColor="78, 86, 184"
+              secondColor="107, 79, 191"
+              thirdColor="194, 61, 23"
+              fourthColor="107, 114, 199"
+              fifthColor="242, 74, 29"
+              pointerColor="107, 79, 191"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+          </div>
+          <Container className="relative grid items-center gap-12 py-24 lg:grid-cols-2">
+            <div>
+              <p className="mb-4 text-xs font-medium uppercase tracking-[0.08em] text-cyan-400">
+                Oracle Governance, Risk &amp; Compliance Specialists
+              </p>
+              <h1 className="max-w-3xl text-5xl font-semibold leading-[1.05] tracking-[-0.02em] text-white md:text-6xl lg:text-7xl">
+                Enterprise risk, governed with precision
+              </h1>
+              <p className="mt-6 max-w-xl text-lg leading-7 text-white/70">
+                Claaps designs, implements, and supports Oracle GRC and Oracle
+                Risk Management Cloud for enterprises that treat governance as
+                a board-level responsibility, not a checkbox.
+              </p>
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                <Button href="/contact" size="lg">
+                  Request a Consultation
+                </Button>
+                <Button
+                  href="/services"
+                  variant="secondary"
+                  size="lg"
+                  className="!border-white/30 !text-white hover:!border-white/50"
+                >
+                  Explore Services
+                </Button>
+              </div>
+            </div>
+            <div className="hidden h-[580px] overflow-visible lg:block xl:h-[640px]">
+              <ClaapsOrbitCanvas />
+            </div>
+          </Container>
+        </section>
+
+        <AboutUsSection />
+      </div>
+
+      <section className="border-b border-graphite-700 py-16">
+        <Container>
+          <PlaceholderBlock
+            compact
+            label="Client roster pending publication approval"
+          />
+        </Container>
+      </section>
+
+      <section className="border-b border-graphite-700 py-24 md:py-32">
+        <Container size="default" className="max-w-3xl">
+          <div className="flex flex-col gap-12">
+            {problemStatements.map((statement, i) => (
+              <RevealOnScroll key={statement} delay={i * 0.05}>
+                <p className="text-2xl font-medium leading-snug tracking-[-0.01em] text-offwhite-50 md:text-3xl">
+                  {statement}
+                </p>
+              </RevealOnScroll>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-b border-graphite-700 py-24 md:py-32">
+        <Container>
+          <SectionHeading
+            eyebrow="What we do"
+            title="Five services, one governance lifecycle"
+            lead="From regulatory interpretation through implementation to ongoing administration."
+          />
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {services.map((service, i) => (
+              <RevealOnScroll key={service.slug} delay={i * 0.05}>
+                <Card href={`/services/${service.slug}`}>
+                  <p className="text-xs font-medium uppercase tracking-[0.06em] text-cyan-700">
+                    {service.eyebrow}
+                  </p>
+                  <h3 className="mt-3 text-xl font-medium text-offwhite-50">
+                    {service.shortTitle}
+                  </h3>
+                  <p className="mt-3 text-sm leading-6 text-slate-400">
+                    {service.summary}
+                  </p>
+                  <span className="mt-auto flex items-center gap-1.5 pt-6 text-sm font-medium text-offwhite-50 transition-colors duration-150 group-hover:text-electric-600">
+                    Learn more
+                    <ArrowRight
+                      aria-hidden
+                      size={15}
+                      strokeWidth={2}
+                      className="transition-transform duration-150 group-hover:translate-x-0.5"
+                    />
+                  </span>
+                </Card>
+              </RevealOnScroll>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-b border-graphite-700 py-24 md:py-32">
+        <Container>
+          <SectionHeading
+            eyebrow="Solutions by role"
+            title="Find the path that matches your responsibility"
+          />
+          <div className="mt-12 grid gap-4 md:grid-cols-5">
+            {roles.map((role) => (
+              <Card key={role.slug} href={`/solutions#${role.slug}`} className="items-center text-center">
+                <p className="text-lg font-medium text-offwhite-50">{role.label}</p>
+                <span className="mt-auto flex items-center gap-1 pt-3 text-sm text-slate-400 transition-colors duration-150 group-hover:text-electric-600">
+                  View
+                  <ArrowRight
+                    aria-hidden
+                    size={14}
+                    strokeWidth={2}
+                    className="transition-transform duration-150 group-hover:translate-x-0.5"
+                  />
+                </span>
+              </Card>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-b border-graphite-700 py-24 md:py-32">
+        <Container>
+          <SectionHeading eyebrow="Proof of work" title="Case studies" />
+          <div className="mt-12">
+            <PlaceholderBlock label="Case study in development — available on request" />
+          </div>
+          <div className="mt-6">
+            <Button href="/case-studies" variant="ghost">
+              View all case studies →
+            </Button>
+          </div>
+        </Container>
+      </section>
+
+      <WhyClaapsSection />
+
+      <CTASection
+        title="Talk to a GRC specialist"
+        lead="Tell us about your Oracle GRC, risk, or compliance challenge — we'll respond with next steps, not a sales script."
+        secondaryLabel="Explore Solutions"
+        secondaryHref="/solutions"
+      />
+    </>
   );
 }
