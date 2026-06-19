@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 
@@ -133,7 +133,7 @@ export const FooterBackgroundGradient = () => {
       className="absolute inset-0 z-0"
       style={{
         background:
-          "radial-gradient(125% 125% at 50% 10%, rgba(11,12,15,0) 50%, rgba(107,79,191,0.18) 100%)",
+          "radial-gradient(125% 125% at 50% 10%, rgba(11,12,15,0) 35%, rgba(78,86,184,0.4) 100%)",
       }}
     />
   );
