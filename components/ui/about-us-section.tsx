@@ -230,10 +230,10 @@ export default function AboutUsSection() {
                 >
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Link
-                      href="/case-studies"
+                      href="/contact"
                       className="bg-white text-offwhite-50 px-4 py-2 rounded-full flex items-center gap-2 text-sm font-medium"
                     >
-                      View Case Studies <ArrowRight className="w-4 h-4" />
+                      Talk to Us <ArrowRight className="w-4 h-4" />
                     </Link>
                   </motion.div>
                 </motion.div>

@@ -1,0 +1,69 @@
+"use client";
+
+import Image from "next/image";
+import AutoScroll from "embla-carousel-auto-scroll";
+import { Container } from "@/components/global/Container";
+import { SectionHeading } from "@/components/global/SectionHeading";
+import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+
+const logos = [
+  { name: "Crown Castle", src: "/logos/crown-castle.jpg" },
+  { name: "Ocado", src: "/logos/ocado.jpg" },
+  { name: "Entertainment Partners", src: "/logos/entertainment-partners.png" },
+  { name: "ACWA Power", src: "/logos/acwa-power.jpg" },
+  { name: "Pearson", src: "/logos/pearson.png" },
+  { name: "Biogen", src: "/logos/biogen.jpg" },
+  { name: "Smiths Medical", src: "/logos/smiths-medical.jpg" },
+  { name: "CNO Financial Group", src: "/logos/cno-financial-group.jpg" },
+  { name: "GlobalFoundries", src: "/logos/globalfoundries.png" },
+  { name: "Keysight Technologies", src: "/logos/keysight-technologies.png" },
+  { name: "Agilent Technologies", src: "/logos/agilent-technologies.png" },
+];
+
+export default function LogosSection() {
+  return (
+    <section className="border-b border-graphite-700 py-24 md:py-32">
+      <Container>
+        <RevealOnScroll>
+          <SectionHeading
+            eyebrow="Our experience"
+            title="Trusted by teams across regulated industries"
+            align="center"
+            className="mx-auto"
+          />
+        </RevealOnScroll>
+      </Container>
+
+      <RevealOnScroll delay={0.1}>
+        <div className="relative mt-12 md:mt-16">
+          <Carousel
+            opts={{ loop: true }}
+            plugins={[AutoScroll({ playOnInit: true, stopOnInteraction: false, speed: 0.6 })]}
+          >
+            <CarouselContent className="ml-0">
+              {logos.map((logo) => (
+                <CarouselItem
+                  key={logo.name}
+                  className="flex basis-1/3 justify-center pl-0 sm:basis-1/4 md:basis-1/5 lg:basis-1/6"
+                >
+                  <div className="mx-10 flex h-20 shrink-0 items-center justify-center">
+                    <Image
+                      src={logo.src}
+                      alt={logo.name}
+                      width={220}
+                      height={72}
+                      className="h-16 w-auto object-contain"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+          <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background to-transparent md:w-24" />
+          <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background to-transparent md:w-24" />
+        </div>
+      </RevealOnScroll>
+    </section>
+  );
+}

@@ -23,7 +23,6 @@ const navItems = [
     href: "/solutions",
     menu: roles.map((r) => ({ label: r.label, href: `/solutions#${r.slug}` })),
   },
-  { label: "Case Studies", href: "/case-studies" },
   { label: "About", href: "/about" },
 ];
 

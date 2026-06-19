@@ -4,20 +4,14 @@ import { SectionHeading } from "@/components/global/SectionHeading";
 import { Card } from "@/components/global/Card";
 import { Button } from "@/components/global/Button";
 import { CTASection } from "@/components/global/CTASection";
-import { PlaceholderBlock } from "@/components/global/PlaceholderBlock";
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import AboutUsSection from "@/components/ui/about-us-section";
+import LogosSection from "@/components/ui/logos-section";
 import WhyClaapsSection from "@/components/ui/why-claaps-section";
 import { ClaapsOrbitCanvas } from "@/components/three/ClaapsOrbitCanvas";
 import { services } from "@/lib/content/services";
 import { roles } from "@/lib/content/solutions";
-
-const problemStatements = [
-  "Audit evidence lives in spreadsheets, email threads, and shared drives — not in the system you'd actually defend to a regulator.",
-  "Oracle GRC and Risk Management Cloud are powerful, but only if they're configured around how your organization actually governs risk.",
-  "Regulatory requirements change faster than most internal teams can re-map them to existing controls.",
-];
 
 export default function Home() {
   return (
@@ -86,28 +80,7 @@ export default function Home() {
         <AboutUsSection />
       </div>
 
-      <section className="border-b border-graphite-700 py-16">
-        <Container>
-          <PlaceholderBlock
-            compact
-            label="Client roster pending publication approval"
-          />
-        </Container>
-      </section>
-
-      <section className="border-b border-graphite-700 py-24 md:py-32">
-        <Container size="default" className="max-w-3xl">
-          <div className="flex flex-col gap-12">
-            {problemStatements.map((statement, i) => (
-              <RevealOnScroll key={statement} delay={i * 0.05}>
-                <p className="text-2xl font-medium leading-snug tracking-[-0.01em] text-offwhite-50 md:text-3xl">
-                  {statement}
-                </p>
-              </RevealOnScroll>
-            ))}
-          </div>
-        </Container>
-      </section>
+      <LogosSection />
 
       <section className="border-b border-graphite-700 py-24 md:py-32">
         <Container>
@@ -166,20 +139,6 @@ export default function Home() {
                 </span>
               </Card>
             ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-b border-graphite-700 py-24 md:py-32">
-        <Container>
-          <SectionHeading eyebrow="Proof of work" title="Case studies" />
-          <div className="mt-12">
-            <PlaceholderBlock label="Case study in development — available on request" />
-          </div>
-          <div className="mt-6">
-            <Button href="/case-studies" variant="ghost">
-              View all case studies →
-            </Button>
           </div>
         </Container>
       </section>
