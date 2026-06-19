@@ -23,7 +23,7 @@ const navItems = [
     href: "/solutions",
     menu: roles.map((r) => ({ label: r.label, href: `/solutions#${r.slug}` })),
   },
-  { label: "About", href: "/about" },
+  { label: "About us", href: "/#about-section" },
 ];
 
 export function Header() {

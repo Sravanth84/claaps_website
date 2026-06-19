@@ -19,6 +19,12 @@ const ClaapsOrbitScene = dynamic(
 export function ClaapsOrbitCanvas() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [shouldRender, setShouldRender] = useState(false);
+  // Once mounted, the canvas stays mounted (avoids WebGL context churn) —
+  // but the render loop itself pauses whenever the hero scrolls out of
+  // view, so the continuous useFrame work in ClaapsOrbitScene (90 sparkles,
+  // orbiting nodes, camera parallax) doesn't keep competing with the main
+  // thread/GPU for the rest of the scroll session.
+  const [inView, setInView] = useState(false);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -32,10 +38,9 @@ export function ClaapsOrbitCanvas() {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting) {
-          setShouldRender(true);
-          observer.disconnect();
-        }
+        const intersecting = entries[0]?.isIntersecting ?? false;
+        setInView(intersecting);
+        if (intersecting) setShouldRender(true);
       },
       { threshold: 0.1 }
     );
@@ -54,7 +59,7 @@ export function ClaapsOrbitCanvas() {
       </div>
       {shouldRender ? (
         <div className="absolute inset-0 overflow-visible">
-          <ClaapsOrbitScene />
+          <ClaapsOrbitScene paused={!inView} />
         </div>
       ) : null}
     </div>

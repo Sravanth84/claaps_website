@@ -3,7 +3,7 @@ import { Container } from "@/components/global/Container";
 import { SectionHeading } from "@/components/global/SectionHeading";
 import { Card } from "@/components/global/Card";
 import { Button } from "@/components/global/Button";
-import { CTASection } from "@/components/global/CTASection";
+import { GetInTouchSection } from "@/components/global/GetInTouchSection";
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 import AboutUsSection from "@/components/ui/about-us-section";
@@ -145,12 +145,7 @@ export default function Home() {
 
       <WhyClaapsSection />
 
-      <CTASection
-        title="Talk to a GRC specialist"
-        lead="Tell us about your Oracle GRC, risk, or compliance challenge — we'll respond with next steps, not a sales script."
-        secondaryLabel="Explore Solutions"
-        secondaryHref="/solutions"
-      />
+      <GetInTouchSection />
     </>
   );
 }

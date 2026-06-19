@@ -270,7 +270,7 @@ function CameraParallax() {
   return null;
 }
 
-export function ClaapsOrbitScene() {
+export function ClaapsOrbitScene({ paused = false }: { paused?: boolean }) {
   const [active, setActive] = useState(true);
 
   useEffect(() => {
@@ -281,7 +281,7 @@ export function ClaapsOrbitScene() {
 
   return (
     <Canvas
-      frameloop={active ? "always" : "never"}
+      frameloop={active && !paused ? "always" : "never"}
       dpr={[1, 1.75]}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       camera={{ position: [0, 0, 6.5], fov: 42 }}

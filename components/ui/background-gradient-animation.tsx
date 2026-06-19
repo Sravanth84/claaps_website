@@ -34,6 +34,25 @@ export const BackgroundGradientAnimation = ({
   containerClassName?: string;
 }) => {
   const interactiveRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  // The five gradient blobs animate forever via CSS keyframes (see
+  // app/globals.css animate-first..fifth) — combined with the blur filter
+  // each one carries, that's a continuous expensive repaint. Pausing them
+  // once this (sticky, so often scrolled-past-but-still-mounted) hero
+  // leaves the viewport keeps that cost from competing with scroll/composite
+  // work for the rest of the page.
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setPaused(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const [curX, setCurX] = useState(0);
   const [curY, setCurY] = useState(0);
@@ -88,6 +107,7 @@ export const BackgroundGradientAnimation = ({
 
   return (
     <div
+      ref={containerRef}
       className={cn(
         "absolute inset-0 h-full w-full overflow-hidden bg-[linear-gradient(40deg,var(--gradient-background-start),var(--gradient-background-end))]",
         containerClassName
@@ -126,6 +146,7 @@ export const BackgroundGradientAnimation = ({
             `animate-first`,
             `opacity-100`
           )}
+          style={{ animationPlayState: paused ? "paused" : "running" }}
         ></div>
         <div
           className={cn(
@@ -135,6 +156,7 @@ export const BackgroundGradientAnimation = ({
             `animate-second`,
             `opacity-100`
           )}
+          style={{ animationPlayState: paused ? "paused" : "running" }}
         ></div>
         <div
           className={cn(
@@ -144,6 +166,7 @@ export const BackgroundGradientAnimation = ({
             `animate-third`,
             `opacity-100`
           )}
+          style={{ animationPlayState: paused ? "paused" : "running" }}
         ></div>
         <div
           className={cn(
@@ -153,6 +176,7 @@ export const BackgroundGradientAnimation = ({
             `animate-fourth`,
             `opacity-70`
           )}
+          style={{ animationPlayState: paused ? "paused" : "running" }}
         ></div>
         <div
           className={cn(
@@ -162,6 +186,7 @@ export const BackgroundGradientAnimation = ({
             `animate-fifth`,
             `opacity-100`
           )}
+          style={{ animationPlayState: paused ? "paused" : "running" }}
         ></div>
 
         {interactive && (

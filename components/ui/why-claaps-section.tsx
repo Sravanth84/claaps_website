@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   MapPin,
   ClipboardList,
@@ -10,33 +11,56 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
+import { TiltCard } from "@/components/ui/tilt-card";
 
-const reasons: { icon: LucideIcon; text: string }[] = [
-  { icon: MapPin, text: "Best in class technology expertise" },
+const reasons: { icon: LucideIcon; headline: string; sub: string; image: string }[] = [
+  {
+    icon: MapPin,
+    headline: "Best-in-Class Expertise",
+    sub: "Deep technology expertise across the Oracle GRC stack.",
+    image: "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?q=80&w=600&auto=format&fit=crop",
+  },
   {
     icon: ClipboardList,
-    text: "Full life cycle project management, implementation, migration, support and audit services",
+    headline: "Full Lifecycle Delivery",
+    sub: "Implementation, migration, support and audit — one accountable team.",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=600&auto=format&fit=crop",
   },
   {
     icon: Award,
-    text: "World class senior level subject matter experts in both Oracle GRC and Risk Management Cloud",
+    headline: "Senior-Level Specialists",
+    sub: "World-class experts in Oracle GRC and Risk Management Cloud.",
+    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=600&auto=format&fit=crop",
   },
   {
     icon: Building2,
-    text: "Deep domain knowledge and core expertise in financial, supply chain and procurement",
+    headline: "Deep Domain Knowledge",
+    sub: "Core expertise in financial, supply chain and procurement.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop",
   },
   {
     icon: Percent,
-    text: "Spend up to 65% less on implementation and support without compromising on quality and schedule",
+    headline: "65% Lower Cost",
+    sub: "Less spend on implementation and support — same quality, same schedule.",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=600&auto=format&fit=crop",
   },
-  { icon: Handshake, text: "Adherence to Service Level Agreements (SLA)" },
+  {
+    icon: Handshake,
+    headline: "SLA-Backed Delivery",
+    sub: "Strict adherence to Service Level Agreements.",
+    image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=600&auto=format&fit=crop",
+  },
   {
     icon: Network,
-    text: "Innovative and scalable solutions tailored to your needs",
+    headline: "Built to Scale",
+    sub: "Innovative, scalable solutions tailored to your needs.",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600&auto=format&fit=crop",
   },
   {
     icon: Target,
-    text: "Integrated global delivery model to bring down the cost",
+    headline: "Global Delivery Model",
+    sub: "Integrated delivery that brings down total cost.",
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=600&auto=format&fit=crop",
   },
 ];
 
@@ -66,15 +90,30 @@ export default function WhyClaapsSection() {
           {reasons.map((reason, i) => {
             const Icon = reason.icon;
             return (
-              <RevealOnScroll key={reason.text} delay={i * 0.05}>
-                <div className="flex h-full flex-col items-center gap-4 rounded-xl bg-white p-6 text-center shadow-elevation-2">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-cyan-700/10 text-cyan-700">
-                    <Icon size={22} strokeWidth={2} />
+              <RevealOnScroll key={reason.headline} delay={i * 0.05}>
+                <TiltCard className="h-full" floatDelay={i * 0.25}>
+                  <div className="group relative flex h-full flex-col items-center overflow-hidden rounded-2xl border border-white/15 bg-white/10 text-center shadow-elevation-2 backdrop-blur-xl">
+                    <div className="relative h-28 w-full overflow-hidden">
+                      <Image
+                        src={reason.image}
+                        alt=""
+                        fill
+                        sizes="(min-width: 768px) 25vw, 50vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-electric-600 via-electric-600/30 to-transparent" />
+                    </div>
+                    <div className="relative -mt-6 flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white text-electric-600 shadow-elevation-1">
+                      <Icon size={20} strokeWidth={2} />
+                    </div>
+                    <p className="relative mt-3 px-5 text-base font-semibold leading-snug text-white">
+                      {reason.headline}
+                    </p>
+                    <p className="relative mt-1.5 px-5 pb-6 text-xs leading-snug text-white/70">
+                      {reason.sub}
+                    </p>
                   </div>
-                  <p className="text-sm font-medium leading-snug text-offwhite-50">
-                    {reason.text}
-                  </p>
-                </div>
+                </TiltCard>
               </RevealOnScroll>
             );
           })}
